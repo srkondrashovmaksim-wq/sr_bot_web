@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h1>Выработка</h1>
+
+  <form class="row g-2 mb-3">
+    <div class="col-auto">
+      <label>Месяц</label>
+      <select name="month" class="form-select">
+        {% for num, name in [(1,'Янв'),(2,'Фев'),(3,'Мар'),(4,'Апр'),
+                             (5,'Май'),(6,'Июн'),(7,'Июл'),(8,'Авг'),
+                             (9,'Сен'),(10,'Окт'),(11,'Ноя'),(12,'Дек')] %}
+          <option value="{{ num }}" {% if month==num %}selected{% endif %}>{{ name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-auto">
+      <label>Год</label>
+      <select name="year" class="form-select">
+        {% for yy in range(2020, datetime.utcnow().year+1) %}
+          <option value="{{ yy }}" {% if year==yy %}selected{% endif %}>{{ yy }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-auto align-self-end">
+      <button type="submit" class="btn btn-primary">Показать</button>
+    </div>
+  </form>
+
+  <table class="table table-sm table-bordered">
+    <thead>
+      <tr>
+        <th>Сотрудник</th>
+        {% for d in days %}
+          <th class="text-end">{{ d }}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for uid, name in emps %}
+        <tr>
+          <td>{{ name }}</td>
+          {% for d in days %}
+            <td class="text-end">{{ data[uid][d] }}</td>
+          {% endfor %}
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

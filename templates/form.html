@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>{% if form._obj %}Редактировать{% else %}Новая{% endif %} запись</h1>
+<form method="post">
+  {{ form.hidden_tag() }}
+  <p>{{ form.telegram_id.label }}<br>{{ form.telegram_id() }}</p>
+  <p>{{ form.block.label }}<br>{{ form.block() }}</p>
+  <p>{{ form.waybill.label }}<br>{{ form.waybill() }}</p>
+  <p>{{ form.box.label }}<br>{{ form.box() }}</p>
+  <p>{{ form.article.label }}<br>{{ form.article() }}</p>
+  <p>{{ form.quantity.label }}<br>{{ form.quantity() }}</p>
+  <p>{{ form.submit() }}</p>
+</form>
+{% endblock %}

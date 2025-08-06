@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2>Детали записи {{ op.id }}</h2>
+  <ul>
+    <li>ID пользователя: {{ op.user_id }}</li>
+    <li>Блок: {{ op.block }}</li>
+    <li>Накладная: {{ op.waybill }}</li>
+    <li>Короб: {{ op.box }}</li>
+    <li>Артикул: {{ op.article }}</li>
+    <li>Количество: {{ op.quantity }}</li>
+    <li>Дата: {{ op.created_at.strftime('%Y-%m-%d %H:%M') }}</li>
+  </ul>
+  <p>
+    <a href="{{ url_for('new_or_edit', rec_id=op.id) }}">Редактировать</a> |
+    <a href="{{ url_for('list_records') }}">Назад</a>
+  </p>
+{% endblock %}

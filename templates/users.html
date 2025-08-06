@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2>Пользователи</h2>
+  <form method="post">
+    <table>
+      <thead>
+        <tr><th>Telegram ID</th><th>ФИО</th></tr>
+      </thead>
+      <tbody>
+        {% for u in users %}
+          <tr>
+            <td>{{ u.telegram_id }}</td>
+            <td style="text-align:left">
+              <input type="text" name="name_{{u.telegram_id}}" value="{{ u.name or '' }}" style="width:300px">
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <button type="submit">Сохранить</button>
+  </form>
+{% endblock %}

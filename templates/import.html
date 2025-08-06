@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Импорт из Excel</h2>
+  <form method="post" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
+    <div>
+      {{ form.block.label }}<br>
+      {{ form.block() }}
+    </div>
+    <div>
+      {{ form.file.label }}<br>
+      {{ form.file() }}
+    </div>
+    <button type="submit">{{ form.submit.label.text }}</button>
+  </form>
+{% endblock %}

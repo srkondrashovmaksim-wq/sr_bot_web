@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2>Просмотр записи #{{ op.id }}</h2>
+  <table class="table table-bordered">
+    <tr><th>ID</th><td>{{ op.id }}</td></tr>
+    <tr><th>Пользователь</th><td>{{ op.user.name if op.user else '' }}</td></tr>
+    <tr><th>Блок</th><td>{{ op.block }}</td></tr>
+    <tr><th>Накладная</th><td>{{ op.waybill }}</td></tr>
+    <tr><th>Короб</th><td>{{ op.box }}</td></tr>
+    <tr><th>Артикул</th><td>{{ op.article }}</td></tr>
+    <tr><th>Количество</th><td>{{ op.quantity }}</td></tr>
+    <tr><th>Дата</th><td>{{ op.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</td></tr>
+  </table>
+  <a href="{{ url_for('list_records') }}" class="btn btn-secondary">Назад</a>
+{% endblock %}

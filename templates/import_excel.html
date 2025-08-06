@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Импорт Excel</h2>
+<form id="importForm" method="POST" enctype="multipart/form-data">
+  {{ form.hidden_tag() }}
+  <div class="mb-3">
+    {{ form.block.label }}{{ form.block(class="form-select") }}
+  </div>
+  <div class="mb-3">
+    {{ form.file.label }}{{ form.file(class="form-control") }}
+  </div>
+  <button class="btn btn-primary">{{ form.submit.label.text }}</button>
+</form>
+
+<div class="progress mt-3" style="height: 25px; display:none;" id="pb">
+  <div id="bar" class="progress-bar" role="progressbar" style="width:0%">0%</div>
+</div>
+
+<script>
+const frm = document.getElementById('importForm'),
+      pb  = document.getElementById('pb'),
+      bar = document.getElementById('bar');
+
+frm.addEventListener('submit', e=>{
+  e.preventDefault();
+  const xhr = new XMLHttpRequest();
+  xhr.open('POST','',true);
+
+  xhr.upload.onprogress = evt=>{
+    if(evt.lengthComputable){
+      const pct = Math.round(evt.loaded/evt.total*100);
+      bar.style.width = pct+'%';
+      bar.textContent = pct+'%';
+      pb.style.display = 'block';
+    }
+  };
+  xhr.onload = ()=>{
+    if(xhr.status===200) window.location = "{{ url_for('list_records') }}";
+  };
+
+  xhr.send(new FormData(frm));
+});
+</script>
+{% endblock %}

@@ -1,0 +1,14 @@
+body {
+  background: #121212;
+  color: #ff9800;
+}
+.navbar {
+  background: #000000 !important;
+}
+.table {
+  background: #1e1e1e;
+  color: #ff9800;
+}
+.table thead {
+  background: #000000;
+}

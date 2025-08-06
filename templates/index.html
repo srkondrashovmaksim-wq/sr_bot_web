@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block title %}Список операций{% endblock %}
+{% block content %}
+  <h1>Операции</h1>
+  <form class="row g-2 mb-3">
+    {{ form.hidden_tag() }}
+    <div class="col-auto">{{ form.search_id.label }} {{ form.search_id(class="form-control") }}</div>
+    <div class="col-auto">{{ form.block.label }}     {{ form.block(class="form-select") }}</div>
+    <div class="col-auto">{{ form.date_from.label }} {{ form.date_from(class="form-control") }}</div>
+    <div class="col-auto">{{ form.date_to.label }}   {{ form.date_to(class="form-control") }}</div>
+    <div class="col-auto align-self-end">{{ form.submit(class="btn btn-primary") }}</div>
+  </form>
+
+  <a href="{{ url_for('op_new') }}" class="btn btn-success mb-3">Новая запись</a>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th><th>Блок</th><th>Накладная</th><th>Короб</th><th>Артикул</th><th>Кол-во</th><th>Дата</th><th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for op in ops.items %}
+      <tr>
+        <td><a href="{{ url_for('op_detail', op_id=op.id) }}">{{ op.id }}</a></td>
+        <td>{{ op.block }}</td>
+        <td>{{ op.waybill }}</td>
+        <td>{{ op.box }}</td>
+        <td>{{ op.article }}</td>
+        <td>{{ op.quantity }}</td>
+        <td>{{ op.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+        <td>
+          <form method="post" action="{{ url_for('op_delete', op_id=op.id) }}" style="display:inline">
+            <button class="btn btn-sm btn-danger" onclick="return confirm('Удалить?')">×</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <nav aria-label="...">
+    <ul class="pagination">
+      {% if ops.has_prev %}
+        <li class="page-item"><a class="page-link" href="{{ url_for('index', page=ops.prev_num, **request.args) }}">«</a></li>
+      {% endif %}
+      <li class="page-item disabled"><span class="page-link">{{ ops.page }} / {{ ops.pages }}</span></li>
+      {% if ops.has_next %}
+        <li class="page-item"><a class="page-link" href="{{ url_for('index', page=ops.next_num, **request.args) }}">»</a></li>
+      {% endif %}
+    </ul>
+  </nav>
+{% endblock %}
